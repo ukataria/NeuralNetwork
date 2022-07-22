@@ -43,6 +43,9 @@ for i in range(0, 1):
             v += w2[k][j] * y1[k]
         y2.append(1 / (1 + math.e ** (-1 * v)))
     #calculating error
-    totalError = 0.5
-    
+    squareError = 0.0
+    for j in range(0, outputNum):
+        squareError += (target[j] - y2[j]) ** 2.0
+    totalError = (1 / outputNum) * squareError
     #backpropagation
+    
