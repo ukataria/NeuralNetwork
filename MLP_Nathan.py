@@ -43,13 +43,13 @@ hiddenNum = w1Excel.shape[0]
 #training set
 #change end value to len(training[0]) once program is complete
 totalError = 0.0
-for i in range(0, 1):
+for i in range(0, len(training[0])):
     input = []
     for j in range(0, inputNum):
-        input.append(training[j][0])
+        input.append(training[j][i])
     target = []
     for j in range(w1Excel.shape[1], cross_data.shape[1]):
-        target.append(training[j][0])
+        target.append(training[j][i])
     #forward propagation
     y1 = []
     for j in range(0, hiddenNum):
@@ -68,7 +68,6 @@ for i in range(0, 1):
     #calculating error
     squareError = 0.0
     for j in range(0, outputNum):
-        print(y2[j])
         squareError += (target[j] - y2[j]) ** 2.0
     totalError = (1 / outputNum) * squareError
     #backpropagation outer layer
@@ -100,7 +99,5 @@ for i in range(0, 1):
         b1[j] = b1[j] + beta * (b1[j] - b1Old[j]) + alpha * localGradient * 1
         b1Old[j] = tempB
     #output
-    print("Epoch 1 Training (" + str(i) + " / " + str(len(training[0])) + "): " + str(totalError))
+    print("Epoch 1 Training (" + str(i + 1) + " / " + str(len(training[0])) + "): " + str(totalError))
 print(totalError)
-for i in b2:
-    print(i)
