@@ -42,7 +42,7 @@ outputNum = w2Excel.shape[0]
 hiddenNum = w1Excel.shape[0]
 #training set
 #change end value to len(training[0]) once program is complete
-totalError = 0.0
+sumSquaredErrors = 0.0
 for i in range(0, len(training[0])):
     input = []
     for j in range(0, inputNum):
@@ -70,6 +70,7 @@ for i in range(0, len(training[0])):
     for j in range(0, outputNum):
         squareError += (target[j] - y2[j]) ** 2.0
     totalError = (1 / outputNum) * squareError
+    sumSquaredErrors += totalError
     #backpropagation outer layer
     for j in range(0, outputNum):
         localGradient = (target[j] - y2[j]) * y2[j] * (1 - y2[j])
@@ -100,4 +101,4 @@ for i in range(0, len(training[0])):
         b1Old[j] = tempB
     #output
     print("Epoch 1 Training (" + str(i + 1) + " / " + str(len(training[0])) + "): " + str(totalError))
-print(totalError)
+print(sumSquaredErrors / 314)
