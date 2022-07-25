@@ -1,4 +1,6 @@
 import pandas as pd
+from tabulate import tabulate
+from decimal import Decimal
 import math
 alpha = 0.7
 beta = 0.3
@@ -99,6 +101,31 @@ for i in range(0, len(training[0])):
         tempB = b1[j]
         b1[j] = b1[j] + beta * (b1[j] - b1Old[j]) + alpha * localGradient * 1
         b1Old[j] = tempB
-    #output
-    print("Epoch 1 Training (" + str(i + 1) + " / " + str(len(training[0])) + "): " + str(totalError))
-print(sumSquaredErrors / 314)
+    #output after 1 input
+    print("Epoch 1 Training (" + str(i + 1) + " / " + str(len(training[0])) + "): " + "{0:7.4f}".format(totalError))
+print("--------------------------------------------------------------------------------------------------------")
+#organizing w1 and w2 tables and rounding:
+w1Final = []
+for i in range(0, hiddenNum):
+    temp = []
+    for j in range(0, inputNum):
+        temp.append("{0:7.4f}".format(w1[j][i]))
+    w1Final.append(temp)
+w2Final = []
+for i in range(0, outputNum):
+    temp = []
+    for j in range(0, hiddenNum):
+        temp.append("{0:7.4f}".format(w2[j][i]))
+    w2Final.append(temp)
+#output of weights, biases, and MSE after 1 epoch
+print("W1 Table: " + "(from " + str(inputNum) + " inputs to " + str(hiddenNum) + " hidden nodes)")
+print(tabulate(w1Final, floatfmt=(".4f")))
+print("B1 Table: (" + str(hiddenNum) + " hidden nodes)")
+for i in b1:
+    print("{0:7.4f}".format(i))
+print("W2 Table: " + "(from " + str(hiddenNum) + " hidden nodes to " + str(outputNum) + " outputs)")
+print(tabulate(w2Final, floatfmt=(".4f")))
+print("B2 Table: (" + str(outputNum) + " outputs)")
+for i in b2:
+    print("{0:7.4f}".format(i))
+print("MSE after epoch 1: " + "{0:7.4f}".format(sumSquaredErrors / len(training[0]), 4))
